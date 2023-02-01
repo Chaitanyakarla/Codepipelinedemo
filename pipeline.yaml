@@ -63,7 +63,7 @@ Resources:
     Properties:
       AuthType: PERSONAL_ACCESS_TOKEN
       ServerType: GITHUB
-      Token: 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
+      Token: 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
   CodeBuilProject:
     Type: 'AWS::CodeBuild::Project'
     Properties:
@@ -214,7 +214,7 @@ Resources:
     Properties:
       Authentication: GITHUB_HMAC
       AuthenticationConfiguration:
-        SecretToken: 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
+        SecretToken: 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
       RegisterWithThirdParty: 'true'
       Filters:
         - JsonPath: $.ref
@@ -250,7 +250,7 @@ Resources:
                 Repo: !Ref GitHubRepository
                 Branch: !Ref GitHubBranch
                 PollForSourceChanges: false
-                OAuthToken: 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
+                OAuthToken: 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
               OutputArtifacts:
                 - Name: SourceCode
         - Name: Build

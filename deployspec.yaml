@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    ENV_NAME: qa
+    ENV_NAME: dev
 
 phases:
   build:

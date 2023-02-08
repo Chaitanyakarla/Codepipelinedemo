@@ -1,6 +1,6 @@
 FROM node:14
 WORKDIR /usr/src/app
-RUN PWD
+RUN pwd
 RUN ls
 COPY ./Codepipelinedemo/package*.json /usr/src/app/
 RUN npm install

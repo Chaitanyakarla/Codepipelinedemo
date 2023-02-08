@@ -3,6 +3,7 @@ USER root
 WORKDIR /usr/src/app
 RUN pwd
 RUN ls
+USER root
 RUN ./
 RUN ls
 COPY ./Codepipelinedemo/package*.json /usr/src/app/

@@ -60,7 +60,6 @@ Resources:
                   - 's3:GetBucketLocation'
                 Resource:
                   - '*'
-                - Effect: Allow
         - PolicyName: codebuildpermissions
           PolicyDocument:
             Version: 2012-10-17

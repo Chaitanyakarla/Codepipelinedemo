@@ -14,6 +14,8 @@ Parameters:
   CodeBuildEnvironmentImage:
     Type: String
     Default: 'aws/codebuild/standard:4.0'
+
+
 Resources:
   CodeBuildServiceRole:
     Type: 'AWS::IAM::Role'
@@ -58,6 +60,57 @@ Resources:
                   - 's3:GetBucketLocation'
                 Resource:
                   - '*'
+                - Effect: Allow
+        - PolicyName: codebuildpermissions
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Resource:
+                  - 'arn:aws:logs:us-east-1:326192147052:log-group:/aws/codebuild/*'
+                  - 'arn:aws:logs:us-east-1:326192147052:log-group:/aws/codebuild/*:*'
+                Action:
+                  - 'logs:CreateLogGroup'
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+              - Effect: Allow
+                Resource:
+                  - 'arn:aws:s3:::codepipeline-us-east-1-*'
+                Action:
+                  - 's3:PutObject'
+                  - 's3:GetObject'
+                  - 's3:GetObjectVersion'
+                  - 's3:GetBucketAcl'
+                  - 's3:GetBucketLocation'
+              - Effect: Allow
+                Action:
+                  - 'codebuild:CreateReportGroup'
+                  - 'codebuild:CreateReport'
+                  - 'codebuild:UpdateReport'
+                  - 'codebuild:BatchPutTestCases'
+                  - 'codebuild:BatchPutCodeCoverages'
+                Resource:
+                  - 'arn:aws:codebuild:us-east-1:326192147052:report-group/*'
+        - PolicyName: codebuildpermissionsone
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'ecr:*'
+                  - 'cloudtrail:LookupEvents'
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - 'iam:CreateServiceLinkedRole'
+                Resource: '*'
+                Condition:
+                  StringEquals:
+                    'iam:AWSServiceName':
+                      - replication.ecr.amazonaws.com
+
+
+
   CodeBuildSourceCredential:
     Type: 'AWS::CodeBuild::SourceCredential'
     Properties:
@@ -93,6 +146,7 @@ Resources:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
         Image: !Ref CodeBuildEnvironmentImage
+        PrivilegedMode: true
 
   CodeBuilProjectDeployDev:  
     Type: 'AWS::CodeBuild::Project'

@@ -2,6 +2,8 @@ FROM node:14
 WORKDIR /usr/src/app
 RUN pwd
 RUN ls
+RUN ./
+RUN ls
 COPY ./Codepipelinedemo/package*.json /usr/src/app/
 RUN npm install
 COPY ./Codepipelinedemo/ /usr/src/app/

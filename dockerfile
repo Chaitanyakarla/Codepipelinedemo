@@ -1,4 +1,5 @@
 FROM node:14
+USER root
 WORKDIR /usr/src/app
 RUN pwd
 RUN ls
